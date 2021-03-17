@@ -1,0 +1,28 @@
+<form>
+  <div class="container">
+    <div class="row">    
+
+   
+    <div class="main">
+      
+    <div class="col text-center" style="color:darkblue"><h1>Login SBM Bank</h1></div><br>
+    
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label" style="color:darkblue"><strong>Account Number</strong></label>
+      <input type="text" [(ngModel)]="accno" name="accno" class="form-control" id="accno" aria-describedby="emailHelp">
+      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label" style="color:darkblue"><strong >Password</strong></label>
+      <input type="password" [(ngModel)]="pswd" name="pswd" class="form-control" id="password">
+    </div>
+    <div class="col-md-12  text-center">
+    <button type="submit" (click)="login()" class="btn  btn-primary btn-lg btn-block ">Login</button>
+    
+  </div>
+
+
+  </div>
+  </div>
+  </div>
+</form>
