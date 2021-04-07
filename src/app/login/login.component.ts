@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router, Routes } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 
 @Component({
@@ -8,19 +10,18 @@ import { Router, Routes } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  accountDetails:any={
-       
-    1000:{acno:1000,balance:10000,username:"userone",password:"testuser"},
-    1001:{acno:1001,balance:20000,username:"usertwo",password:"testuser1"},
-    1002:{acno:1002,balance:25000,username:"userthree",password:"testuser2"}
-
-}
+  
   
 aim="Perfect Partner";
 accno ="Account number please";
 pswd="";
 
-  constructor(private router:Router) { }
+loginForm = this.fb.group({
+  accno:['',[Validators.required,Validators.minLength(4),Validators.maxLength(4),Validators.pattern('[0-9]*')]],
+  pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]]
+})
+
+  constructor(private router:Router,private dataService:DataService, private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
@@ -34,27 +35,21 @@ pswd="";
   }
 login(){
  //alert("login works");
- var accNumber=this.accno;;
+ if(this.loginForm.valid){
+  var accNumber=this.loginForm.value.accno;;
  console.log(accNumber);
-var pwd=this.pswd;
+var pwd=this.loginForm.value.pswd;
 console.log(pwd);
-let dataset=this.accountDetails;
-       if(accNumber in dataset){
-         var pswd1 = dataset[accNumber].password
-         //console.log(pswd1);
-         if(pswd1==pwd){
-           alert("Login Successful");
-           this.router.navigateByUrl("dashboard");
-         }
-       
-       else{
-        alert("incorret password")
-       }
-      }
-       else{
-        alert("No user exist with provided Account Number")
-       }
+var result = this.dataService.login(accNumber,pwd)
+if(result){
+    this.router.navigateByUrl("dashboard");
 }
+ }
+else{
+  alert("Inavalid Form")
+}
+ }
+ 
   
 //   let dataset=this.dataService.accountDetails;
        

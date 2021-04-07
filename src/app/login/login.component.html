@@ -1,4 +1,4 @@
-<form>
+<form [formGroup]="loginForm" (ngSubmit)="login()">
   <div class="container">
     <div class="row">    
 
@@ -9,16 +9,19 @@
     
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label" style="color:darkblue"><strong>Account Number</strong></label>
-      <input type="text" [(ngModel)]="accno" name="accno" class="form-control" id="accno" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      <input type="text" formControlName="accno" name="accno" class="form-control" id="accno" aria-describedby="emailHelp">
+      <div *ngIf="(this.loginForm.get('accno')?.touched||this.loginForm.get('accno')?.dirty)&&this.loginForm.get('accno')?.errors" class="error">Invalid Account Number</div>
     </div>
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label" style="color:darkblue"><strong >Password</strong></label>
-      <input type="password" [(ngModel)]="pswd" name="pswd" class="form-control" id="password">
+      <input type="password" formControlName="pswd" name="pswd" class="form-control" id="password">
+      <div *ngIf="(this.loginForm.get('pswd')?.touched||this.loginForm.get('pswd')?.dirty)&&this.loginForm.get('pswd')?.errors" class="error">Invalid Password</div>
     </div>
-    <div class="col-md-12  text-center">
-    <button type="submit" (click)="login()" class="btn  btn-primary btn-lg btn-block ">Login</button>
     
+
+    <div class="col-md-12  text-center">
+    <button type="submit"  class="btn  btn-primary btn-lg btn-block ">Login</button>
+    <a routerLink="register">Registration</a>
   </div>
 
 
